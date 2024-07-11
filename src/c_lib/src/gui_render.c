@@ -52,7 +52,6 @@ void TogglableButton_draw(TogglableButton* button, GenericDrawer* drawer){
 
 // ---------- initialisation ----------
 void GenericDrawer_init(GenericDrawer** drawer_ptrAdrr){
-    printf("difference avec tSNE software: je faisais les init (sauf SDL_init()) à partir du SDL_thread\n");
 
     // allocate memory for GenericDrawer
     *drawer_ptrAdrr = (GenericDrawer*) malloc(sizeof(GenericDrawer));

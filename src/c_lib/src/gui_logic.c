@@ -73,7 +73,7 @@ void GuiLogic_handle_events_model_selection_screen(GuiLogic* gui_logic, ModelSel
    
     if(gui_logic->mouse->left_clicked){
         if(model_selection_screen->button_1.hovered){
-            die("don't click me!");
+            printf("button 1 clicked\n");
         }
         if(model_selection_screen->button_2.hovered){
             printf("button 2 clicked\n");
