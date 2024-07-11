@@ -82,9 +82,10 @@ void GenericDrawer_init(GenericDrawer** drawer_ptrAdrr){
         die("SDL_CreateRenderer failed!");}
 
     // load the font
-    drawer->font = TTF_OpenFont("../assets/thefont.ttf", 19);
+    drawer->font = TTF_OpenFont("../assets/thefont.ttf", 72);
     if(drawer->font == NULL){
         die("TTF_OpenFont failed!");}
+	TTF_SetFontSize(drawer->font, 16);
     
     // set the initial colour
     set_colour(drawer, AMBER);

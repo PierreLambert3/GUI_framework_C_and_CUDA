@@ -33,8 +33,6 @@ void GuiLogic_cap_frame_rate(uint32_t frame_start, uint32_t target_frame_time, f
 
 void GuiLogic_init(GuiLogic** gui_logic_ptrAdrr, uint32_t rand_state){
 
-    printf("obs to embedding mapping: using SOM (both at neuron and brain level)\n");
-
     // allocate memory for GuiLogic
     *gui_logic_ptrAdrr  = (GuiLogic*) malloc(sizeof(GuiLogic));
     GuiLogic* gui_logic = *gui_logic_ptrAdrr;
@@ -160,8 +158,6 @@ void GuiLogic_run(GuiLogic* gui_logic){
         // check if the user has closed the window
         if(gui_logic->keyboard->escape.released){
             gui_logic->isRunning = false;}
-        
-        printf("regarder video sur CML : https://www.youtube.com/watch?v=7TXJ6_1UbP4 \n");
     }
 
     //cleanup
