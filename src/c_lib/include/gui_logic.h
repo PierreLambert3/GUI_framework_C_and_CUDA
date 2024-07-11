@@ -3,6 +3,7 @@
 
 #include "gui_userInputs.h"
 #include "gui_render.h"
+#include "gui_screen_model_selection.h"
 
 #define SCREEN_MODEL_SELECTION 0u
 #define SCREEN_SANDBOX         1u
@@ -26,8 +27,10 @@ typedef struct {
     Keyboard_inputs* keyboard;
     Mouse_inputs*    mouse;
 
-    // drawing things on screen
-    DrawerThatDraws* drawer;
+    // general drawing manager
+    GenericDrawer* drawer;
+    // screens
+    ModelSelectionScreen* model_selection_screen;
 
     // internals
     uint32_t     rand_state;
@@ -48,5 +51,8 @@ void GuiLogic_handle_events(GuiLogic* gui_logic);
 void GuiLogic_render_screen(GuiLogic* gui_logic, float render_work_to_sleep_ratio);
 // possibly sleep to limit the frame rate
 void GuiLogic_cap_frame_rate(uint32_t frame_start, uint32_t target_frame_time, float* render_work_to_sleep_ratio);
+
+// events for the model selection screen
+void GuiLogic_handle_events_model_selection_screen(GuiLogic* gui_logic, ModelSelectionScreen* model_selection_screen);
 
 #endif // GUI_LOGIC_H

@@ -42,8 +42,10 @@ void GuiLogic_init(GuiLogic** gui_logic_ptrAdrr, uint32_t rand_state){
     // allocate memory & initialise user inputs
     initialise_user_inputs(&(gui_logic->keyboard), &(gui_logic->mouse));
 
-    // allocate memory & initialise the drawer, which in term initialises SDL
-    Drawer_init(&(gui_logic->drawer));
+    // allocate memory & initialise the GenericDrawer, which in term initialises SDL
+    GenericDrawer_init(&(gui_logic->drawer));
+    // allocate memory & initialise the ModelSelectionScreen
+    ModelSelectionScreen_init(&(gui_logic->model_selection_screen));
 
     // initialise GuiLogic internals
     gui_logic->isRunning      = true;
@@ -59,25 +61,84 @@ void GuiLogic_init(GuiLogic** gui_logic_ptrAdrr, uint32_t rand_state){
     reset_console_colour();
 }
 
-void GuiLogic_handle_events(GuiLogic* gui_logic){
-    return;
+void GuiLogic_handle_events_model_selection_screen(GuiLogic* gui_logic, ModelSelectionScreen* model_selection_screen){
+    // hovering on the buttons
+    model_selection_screen->button_1.hovered = TogglableButton_is_hovered(&(model_selection_screen->button_1), gui_logic->mouse->x, gui_logic->mouse->y);
+    model_selection_screen->button_2.hovered = TogglableButton_is_hovered(&(model_selection_screen->button_2), gui_logic->mouse->x, gui_logic->mouse->y);
+    model_selection_screen->button_3.hovered = TogglableButton_is_hovered(&(model_selection_screen->button_3), gui_logic->mouse->x, gui_logic->mouse->y);
+    model_selection_screen->button_4.hovered = TogglableButton_is_hovered(&(model_selection_screen->button_4), gui_logic->mouse->x, gui_logic->mouse->y);
+
+    model_selection_screen->button_1.clicking = model_selection_screen->button_1.hovered && gui_logic->mouse->left_held;
+    model_selection_screen->button_2.clicking = model_selection_screen->button_2.hovered && gui_logic->mouse->left_held;
+    model_selection_screen->button_3.clicking = model_selection_screen->button_3.hovered && gui_logic->mouse->left_held;
+    model_selection_screen->button_4.clicking = model_selection_screen->button_4.hovered && gui_logic->mouse->left_held;
+   
+    if(gui_logic->mouse->left_clicked){
+        if(model_selection_screen->button_1.hovered){
+            die("don't click me!");
+        }
+        if(model_selection_screen->button_2.hovered){
+            printf("button 2 clicked\n");
+        }
+        if(model_selection_screen->button_3.hovered){
+            printf("button 3 clicked\n");
+        }
+        if(model_selection_screen->button_4.hovered){
+            printf("button 4 clicked\n");
+        }
+    }
+
+    /* // handle the events for the 4 buttons
+    if(model_selection_screen->button_1.hovered){
+        if(gui_logic->mouse->left_clicked){
+            die("heeeh");
+        }
+    }
+    if(model_selection_screen->button_2.hovered){
+        if(gui_logic->mouse->left_clicked){
+            printf("button 2 clicked\n");
+        }
+    }
+    if(model_selection_screen->button_3.hovered){
+        if(gui_logic->mouse->left_clicked){
+            printf("button 3 clicked\n");
+        }
+    }
+    if(model_selection_screen->button_4.hovered){
+        if(gui_logic->mouse->left_clicked){
+            printf("button 4 clicked\n");
+        }
+    } */
 }
 
-void GuiLogic_render_screen(GuiLogic* gui_logic, float render_work_to_sleep_ratio){
-    switch (gui_logic->current_screen)
-    {
-    case SCREEN_MODEL_SELECTION:
-        Drawer_draw_model_selection_screen(gui_logic->drawer, render_work_to_sleep_ratio);
-        break;
-    default:
-        die("GuiLogic_render_screen: unknown screen");
-        break;
+void GuiLogic_handle_events(GuiLogic* gui_logic){
+    switch (gui_logic->current_screen){
+        case SCREEN_MODEL_SELECTION:
+            GuiLogic_handle_events_model_selection_screen(gui_logic, gui_logic->model_selection_screen);
+            break;
+        default:
+            die("GuiLogic_render_screen: unknown screen");
+            break;
     }
 }
 
+void GuiLogic_render_screen(GuiLogic* gui_logic, float render_work_to_sleep_ratio){
+    GenericDrawer_get_ready_to_draw(gui_logic->drawer);
+    switch (gui_logic->current_screen){
+        case SCREEN_MODEL_SELECTION:
+            renderModelSelectionScreen(gui_logic->model_selection_screen, gui_logic->drawer);
+            break;
+        default:
+            die("GuiLogic_render_screen: unknown screen");
+            break;
+    }
+    GenericDrawer_finalise_drawing(gui_logic->drawer, render_work_to_sleep_ratio);
+
+}
+
 void GuiLogic_run(GuiLogic* gui_logic){
-    uint32_t target_frame_time = 1000 / 16; // 16fps
-    float render_work_to_sleep_ratio      = 0.5f;
+    uint32_t target_frame_time          = 1000 / 16; // 16fps
+    float    render_work_to_sleep_ratio = 1.0f;
     while (gui_logic->isRunning){
         uint32_t frame_start = SDL_GetTicks();
 
@@ -99,6 +160,8 @@ void GuiLogic_run(GuiLogic* gui_logic){
         // check if the user has closed the window
         if(gui_logic->keyboard->escape.released){
             gui_logic->isRunning = false;}
+        
+        printf("regarder video sur CML : https://www.youtube.com/watch?v=7TXJ6_1UbP4 \n");
     }
 
     //cleanup
