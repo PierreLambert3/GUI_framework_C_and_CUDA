@@ -36,5 +36,9 @@ extern const uint8_t TERMINAL_ERROR_COLOUR_B;
 extern const uint8_t TERMINAL_SUCCESS_COLOUR_R;
 extern const uint8_t TERMINAL_SUCCESS_COLOUR_G ;
 extern const uint8_t TERMINAL_SUCCESS_COLOUR_B;
+// a set of 3 uint8_t values representing misc info terminal text colour
+extern const uint8_t TERMINAL_INFO_COLOUR_R;
+extern const uint8_t TERMINAL_INFO_COLOUR_G ;
+extern const uint8_t TERMINAL_INFO_COLOUR_B;
 
 #endif // LIB_CONSTANTS_H

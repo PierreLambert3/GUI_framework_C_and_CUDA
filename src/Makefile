@@ -8,8 +8,8 @@ EXT_LIB_INCLUDE_PATH=-I./c_lib/ext_libs/include
 GCC_FLAGS=-I./c_lib/include -I./c_lib/ext_libs/include -I/usr/include/SDL2 -O3 -Wall -Wextra -Werror -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -ffast-math -fopenmp -march=native -funroll-loops -flto -finline-functions -fexpensive-optimizations -fipa-pta
 NVCC_FLAGS=-I./c_lib/ext_libs/include -O3
 
-GCC_LDFLAGS=-lSDL2 -lSDL2_ttf -lSDL2_gfx -lm -fopenmp
-NVCC_LDFLAGS=-lcudart -lSDL2 -lSDL2_ttf -lm -Xcompiler -fopenmp,-ffast-math
+GCC_LDFLAGS=-lSDL2 -lSDL2_ttf -lSDL2_gfx -lm -fopenmp -lGL
+NVCC_LDFLAGS=-lcudart -lSDL2 -lSDL2_ttf -lm -Xcompiler -fopenmp,-ffast-math -lGL
 
 # Include the external library headers in DEPS
 DEPS = $(wildcard c_lib/include/*.h) $(wildcard c_lib/ext_libs/include/*.h)

@@ -9,6 +9,8 @@
 
 #include <GL/gl.h>
 
+#define RENDER_USING_GPU false
+
 #define AMBER_0      0u
 #define AMBER_1      1u
 #define AMBER_2      2u
@@ -45,20 +47,20 @@ void Drawer_cleanup(DrawerThatDraws* drawer);
 void set_colour(DrawerThatDraws* drawer, uint32_t colour); // set the colour of the SDL renderer
 SDL_Color get_current_colour(DrawerThatDraws* drawer); // get the current colour of the SDL renderer
 uint32_t SDLColorToUint32(SDL_Color color); // convert an SDL_Color to a uint32_t
-// ---------- drawing ----------
+// ---------- generic drawing functions ----------
 void Drawer_clear_screen(DrawerThatDraws* drawer); // clear the screen
-
 void Drawer_draw_text(DrawerThatDraws* drawer, uint32_t x, uint32_t y, const char* text); // draw text on the screen
-
 void Drawer_draw_line(DrawerThatDraws* drawer, uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2); // draw a line on the screen
 void Drawer_draw_rect(DrawerThatDraws* drawer, uint32_t x, uint32_t y, uint32_t w, uint32_t h); // draw a rectangle on the screen
 void Drawer_draw_circle(DrawerThatDraws* drawer, uint32_t x, uint32_t y, uint32_t r); // draw a circle on the screen
 void Drawer_draw_triangle(DrawerThatDraws* drawer, uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t x3, uint32_t y3); // draw a triangle on the screen
-
 void Drawer_fill_rect(DrawerThatDraws* drawer, uint32_t x, uint32_t y, uint32_t w, uint32_t h); // fill a rectangle on the screen
 void Drawer_fill_circle(DrawerThatDraws* drawer, uint32_t x, uint32_t y, uint32_t r); // fill a circle on the screen
 void Drawer_fill_triangle(DrawerThatDraws* drawer, uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t x3, uint32_t y3); // fill a triangle on the screen
-
 void Drawer_draw_neon_line(DrawerThatDraws* drawer, uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2); // neon light effect
+
+// ---------- drawing the screens & overlay ----------
+void Drawer_draw_overlay(DrawerThatDraws* drawer, float render_work_to_sleep_ratio);
+void Drawer_draw_model_selection_screen(DrawerThatDraws* drawer, float render_work_to_sleep_ratio); // draw the model selection screen
 
 #endif // GUI_RENDER_H

@@ -17,7 +17,7 @@ typedef struct { // (don't run this for more that 49days, if you do, you'll have
 } PeriodicTimer;
 
 void PeriodicTimer_init(PeriodicTimer** timer_ptrAdrr, uint32_t period);
-bool PeriodicTimer_update(PeriodicTimer* timer); // returns true if the timer has elapsed
+bool PeriodicTimer_update(PeriodicTimer* timer, uint32_t frame_time_now); // returns true if the timer has elapsed
 
 // --------- gui logic ---------
 typedef struct {
@@ -45,6 +45,8 @@ void GuiLogic_run(GuiLogic* gui_logic);
 // handle the events themselves
 void GuiLogic_handle_events(GuiLogic* gui_logic);
 // render the screen, calls the appropriate rendering functions from drawer
-void GuiLogic_render_screen(GuiLogic* gui_logic);
+void GuiLogic_render_screen(GuiLogic* gui_logic, float render_work_to_sleep_ratio);
+// possibly sleep to limit the frame rate
+void GuiLogic_cap_frame_rate(uint32_t frame_start, uint32_t target_frame_time, float* render_work_to_sleep_ratio);
 
 #endif // GUI_LOGIC_H

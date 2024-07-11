@@ -1,4 +1,5 @@
 #include "gui_render.h"
+#include "gui_screen_model_selection.h"
 
 // ---------- initialisation ----------
 void Drawer_init(DrawerThatDraws** drawer_ptrAdrr){
@@ -22,12 +23,17 @@ void Drawer_init(DrawerThatDraws** drawer_ptrAdrr){
         die("SDL_CreateWindow failed!");}
 
     // create the renderer
-    drawer->renderer = SDL_CreateRenderer(drawer->window, -1, SDL_RENDERER_ACCELERATED);
+    if(RENDER_USING_GPU){
+        drawer->renderer = SDL_CreateRenderer(drawer->window, -1, SDL_RENDERER_ACCELERATED);
+    }   
+    else{
+        drawer->renderer = SDL_CreateRenderer(drawer->window, -1, SDL_RENDERER_SOFTWARE);
+    }
     if(drawer->renderer == NULL){
         die("SDL_CreateRenderer failed!");}
 
     // load the font
-    drawer->font = TTF_OpenFont("../assets/thefont.ttf", 24);
+    drawer->font = TTF_OpenFont("../assets/thefont.ttf", 15);
     if(drawer->font == NULL){
         die("TTF_OpenFont failed!");}
     
@@ -100,7 +106,7 @@ uint32_t SDLColorToUint32(SDL_Color color) {
 }
 
 
-// ---------- drawing ----------
+// ---------- generic drawing functions ----------
 void Drawer_clear_screen(DrawerThatDraws* drawer){
     set_colour(drawer, BACKGROUND);
     SDL_RenderClear(drawer->renderer);
@@ -163,4 +169,27 @@ void Drawer_draw_neon_line(DrawerThatDraws* drawer, uint32_t x1, uint32_t y1, ui
 
     // Disable blending and reset the color
     glDisable(GL_BLEND); // state change in openGL: this is expensive
+}
+
+
+// ---------- drawing the screens & overlay ----------
+void Drawer_draw_overlay(DrawerThatDraws* drawer, float render_work_to_sleep_ratio){
+    // at the bottom-left corner, display the render_work_to_sleep_ratio. Assume the colour is already set
+    char ratio_string[20];
+    sprintf(ratio_string, "RWSR: %.2f", render_work_to_sleep_ratio);
+    Drawer_draw_text(drawer, 5, WINDOW_H - 30, ratio_string);
+}
+
+
+void Drawer_draw_model_selection_screen(DrawerThatDraws* drawer, float render_work_to_sleep_ratio){
+    // clear the screen
+    Drawer_clear_screen(drawer);
+    // set colour to defaut
+    set_colour(drawer, AMBER);
+    // draw the screen
+    renderModelSelectionScreen(drawer, render_work_to_sleep_ratio);
+    // draw the overlay
+    Drawer_draw_overlay(drawer, render_work_to_sleep_ratio);
+    // now show the screen
+    SDL_RenderPresent(drawer->renderer);
 }

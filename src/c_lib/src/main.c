@@ -46,7 +46,7 @@ void example_cuda_interfacing(){
 } 
 
 // requirements:
-// install SDL2, and TTF and gf (apt: libsdl2-gfx-dev)
+// install SDL2, and TTF and gfx (apt: libsdl2-gfx-dev)
 // also need to have cuda runtime installed
 int main() {
     printf("\n");
@@ -60,7 +60,6 @@ int main() {
         printf("Seeding program with %u\n", general_seed);
         srand(general_seed);
     }
-
     // initialise the cuda device
     initialise_cuda(0);
     

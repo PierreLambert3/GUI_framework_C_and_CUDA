@@ -32,6 +32,7 @@ uint64_t timestamp_seconds();
 void set_console_colour(uint8_t r, uint8_t g, uint8_t b); // sets the console colour to the specified RGB values
 void set_console_colour_error();
 void set_console_colour_success();
+void set_console_colour_info();
 void reset_console_colour();
 
 // -------------------  MEMORY MANAGEMENT : CPU  -------------------

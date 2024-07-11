@@ -70,6 +70,11 @@ void set_console_colour_success(){
     printf("\e[38;2;%d;%d;%dm", TERMINAL_SUCCESS_COLOUR_R, TERMINAL_SUCCESS_COLOUR_G, TERMINAL_SUCCESS_COLOUR_B);
 }
 
+void set_console_colour_info(){
+    printf("\e[38;2;%d;%d;%dm", TERMINAL_INFO_COLOUR_R, TERMINAL_INFO_COLOUR_G, TERMINAL_INFO_COLOUR_B);
+    // printf("\e[38;2;%d;%d;%dm", TERMINAL_SUCCESS_COLOUR_R, TERMINAL_SUCCESS_COLOUR_G, TERMINAL_SUCCESS_COLOUR_B);
+}
+
 void reset_console_colour(){
     printf("\e[38;2;%d;%d;%dm", TERMINAL_TEXT_COLOUR_R, TERMINAL_TEXT_COLOUR_G, TERMINAL_TEXT_COLOUR_B);
 }

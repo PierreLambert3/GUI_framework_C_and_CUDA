@@ -33,4 +33,7 @@ const uint8_t TERMINAL_ERROR_COLOUR_B = DANGER_B;
 const uint8_t TERMINAL_SUCCESS_COLOUR_R = AMBER_2_R;
 const uint8_t TERMINAL_SUCCESS_COLOUR_G = AMBER_2_G;
 const uint8_t TERMINAL_SUCCESS_COLOUR_B = AMBER_2_B;
-
+// a set of 3 uint8_t values representing misc info terminal text colour
+const uint8_t TERMINAL_INFO_COLOUR_R = CYAN_R;
+const uint8_t TERMINAL_INFO_COLOUR_G = CYAN_G;
+const uint8_t TERMINAL_INFO_COLOUR_B = CYAN_B;
